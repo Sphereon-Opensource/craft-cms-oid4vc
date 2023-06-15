@@ -1,0 +1,20 @@
+{% import '_includes/forms.twig' as forms %}
+
+{{ forms.textField({
+    first: true,
+    label: 'SSI Agent Base URL',
+    name: 'agentBaseUrl',
+    value: settings.agentBaseUrl
+}) }}
+
+{{ forms.textField({
+    label: 'Presentation Definition ID',
+    name: 'presentationDefinitionId',
+    value: settings.presentationDefinitionId
+}) }}
+
+{{ forms.textField({
+    label: 'Auth Success Redirect URL',
+    name: 'authSuccessRedirectUrl',
+    value: settings.authSuccessRedirectUrl
+}) }}
