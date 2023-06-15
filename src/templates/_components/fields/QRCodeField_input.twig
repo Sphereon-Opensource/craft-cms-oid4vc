@@ -1,0 +1,24 @@
+{# @var craft \craft\web\twig\variables\CraftVariable #}
+{#
+/**
+ * QRCode plugin for Craft CMS 4.x
+ *
+ * QRCodeField Field Input
+ *
+ * @author    Sphereon
+ * @copyright Copyright (c) 2023 Sphereon
+ * @link      https://sphereon.com
+ * @package   Craft
+ * @since     0.0.1
+ */
+#}
+
+{% import "_includes/forms" as forms %}
+
+{{ forms.hidden({
+    id: id,
+    name: name,
+    value: value,
+}) }}
+
+<img src="{{ value|raw }}" />

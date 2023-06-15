@@ -1,0 +1,28 @@
+{# @var craft \craft\web\twig\variables\CraftVariable #}
+{#
+/**
+ * QRCode plugin for Craft CMS
+ *
+ * QRCodeField Field Settings
+ *
+ * @author    Sphereon
+ * @copyright Copyright (c) 2023 Sphereon
+ * @link      https://sphereon.com
+ * @package   QRCode
+ * @since     0.0.1
+ */
+#}
+
+{% import "_includes/forms" as forms %}
+
+{# {% do view.registerAssetBundle("sphereon\\craft\\assetbundles\\qrcode\\QRCodeAsset") %} #}
+
+{{ forms.textareaField({
+	label: "Data Format"|t,
+	instructions: ""|t,
+	id: 'property',
+	name: 'property',
+	value: field.property ? field.property|raw,
+	errors: field.getErrors('property'),
+    rows: 8
+}) }}

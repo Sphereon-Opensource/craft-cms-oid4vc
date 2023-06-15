@@ -1,0 +1,49 @@
+{
+  "name": "sphereon/craft-cms-oid4vc",
+  "description": "OpenID for Verifiable Presentations and Self-Issued OpenID v2 support for Craft CMS",
+  "type": "craft-plugin",
+  "keywords": ["craft", "OID4VC", "SIOPv2", "SSI", "OpenID"],
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Sphereon.com Ltd",
+      "homepage": "https://sphereon.com"
+    }
+  ],
+  "support": {
+    "email": "support@sphereon.com",
+    "issues": "https://github.com/Sphereon-Opensource/craft-cms-oid4vc/issues?state=open",
+    "source": "https://github.com/Sphereon-Opensource/craft-cms-oid4vc",
+    "docs": "https://github.com/Sphereon-Opensource/craft-cms-oid4vc/blob/master/README.md"
+  },
+  "require": {
+    "craftcms/cms": "^4.0.0",
+    "endroid/qr-code": "^3.5",
+    "netresearch/jsonmapper": "v4.2.0",
+    "php": "^8.0.2|^9.0",
+    "ext-json": "*"
+  },
+  "autoload": {
+    "psr-4": {
+      "sphereon\\craft\\": "src/"
+    }
+  },
+  "extra": {
+    "name": "OID4VP and SIOPv2",
+    "handle": "sphereon-oid4vc",
+    "hasCpSettings": true,
+    "hasCpSection": false,
+    "components": {
+      "qrservice": "sphereon\\craft\\services\\QRCodeService",
+      "settingsservice": "sphereon\\craft\\services\\SettingsService",
+      "siopservice": "sphereon\\craft\\services\\SIOPService"
+    },
+    "class": "sphereon\\craft\\SphereonOID4VC"
+  },
+  "config": {
+    "allow-plugins": {
+      "yiisoft/yii2-composer": true,
+      "craftcms/plugin-installer": true
+    }
+  }
+}
