@@ -1,5 +1,5 @@
 {
-  "name": "sphereon/craft-cms-siopv2-oid4vp",
+  "name": "sphereon/craft-cms-oid4vc",
   "description": "OpenID for Verifiable Presentations and Self-Issued OpenID v2 support for Craft CMS",
   "type": "craft-plugin",
   "keywords": ["craft", "OID4VC", "SIOPv2", "SSI", "OpenID"],
@@ -12,9 +12,9 @@
   ],
   "support": {
     "email": "support@sphereon.com",
-    "issues": "https://github.com/Sphereon-Opensource/craft-cms-siopv2-oid4vp/issues?state=open",
-    "source": "https://github.com/Sphereon-Opensource/craft-cms-siopv2-oid4vp",
-    "docs": "https://github.com/Sphereon-Opensource/craft-cms-siopv2-oid4vp/blob/master/README.md"
+    "issues": "https://github.com/Sphereon-Opensource/craft-cms-oid4vc/issues?state=open",
+    "source": "https://github.com/Sphereon-Opensource/craft-cms-oid4vc",
+    "docs": "https://github.com/Sphereon-Opensource/craft-cms-oid4vc/blob/master/README.md"
   },
   "require": {
     "craftcms/cms": "^4.0.0",
@@ -30,7 +30,7 @@
   },
   "extra": {
     "name": "OID4VP and SIOPv2",
-    "handle": "sphereon-siopv2-oid4vp",
+    "handle": "sphereon-oid4vc",
     "hasCpSettings": true,
     "hasCpSection": false,
     "components": {

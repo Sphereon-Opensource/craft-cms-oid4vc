@@ -2,7 +2,7 @@
 <h1 align="center">
   <br>
   <a href="https://www.sphereon.com"><img src="https://sphereon.com/content/themes/sphereon/assets/img/logo.svg" alt="Sphereon" width="400"></a>
-  <br>Craft CMS - OID4VCP and SIOPv2 Authentication plugin 
+  <br>Craft CMS - OpenID for Verifiable Credentials plugin 
   <br>
 </h1>
 
@@ -38,7 +38,7 @@ instance.
 
 If you want to test the plugin, without installing your own agent, you can use our wallet, together with our publicly
 hosted demo agent. You would need to configure the plugin in the CP with the following settings (plugin settings to be
-found at https://your.craft.site/admin/settings/plugins/sphereon-siopv2-oid4vp):
+found at https://your.craft.site/admin/settings/plugins/sphereon-oid4vc):
 
 - Presentation Definition ID: sphereon
 - SSI Agent Base URL: https://ssi-backend.sphereon.com
@@ -60,7 +60,7 @@ The SIOP Controller is responsible for the SIOPv2 and OID4VP requests/responses
 
 The `init` action gets a fresh session and QR code from the agent. You can call the `init` action with a GET request:
 
-`https://craft.ddev.site/actions/sphereon-siopv2-oid4vp/siop/init`
+`https://craft.ddev.site/actions/sphereon-oid4vc/siop/init`
 
 ```json
 {
@@ -95,7 +95,7 @@ The authentication response has a `status` field, which can have the following v
   containing the vp_token and id_token and `verifiedData` property containing claims are now also part of the response.
 - `error`: An error occurred
 
-example:`https://craft.ddev.site/actions/sphereon-siopv2-oid4vp/siop/status`
+example:`https://craft.ddev.site/actions/sphereon-oid4vc/siop/status`
 
 Body:
 

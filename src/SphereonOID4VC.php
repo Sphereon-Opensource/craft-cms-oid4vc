@@ -107,9 +107,6 @@ class SphereonOID4VC extends \craft\base\Plugin
     // Protected Methods
     // =========================================================================
 
-    // Protected Methods
-    // =========================================================================
-
     /**
      * @inheritdoc
      */
@@ -124,7 +121,7 @@ class SphereonOID4VC extends \craft\base\Plugin
     protected function settingsHtml(): string
     {
         return Craft::$app->view->renderTemplate(
-            'sphereon-siopv2-oid4vp/settings',
+            'sphereon-oid4vc/settings',
             [
                 'settings' => $this->getSettings()
             ]

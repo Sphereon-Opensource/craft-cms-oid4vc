@@ -15,7 +15,7 @@
  * This file exists only as a template for the Sphereon SIOPv2 OID4VP settings.
  * It does nothing on its own.
  *
- * Don't edit this file, instead copy it to 'craft/config' as 'sphereon-siopv2-oid4vp.php'
+ * Don't edit this file, instead copy it to 'craft/config' as 'sphereon-oid4vc.php'
  * and make your changes there to override default settings.
  *
  * Once copied to 'craft/config', this file will be multi-environment aware as
