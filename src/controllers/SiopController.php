@@ -15,7 +15,7 @@ class SiopController extends Controller
 {
 
 
-    protected array|int|bool $allowAnonymous = [
+    protected $allowAnonymous = [
         'init',
         'status',
 

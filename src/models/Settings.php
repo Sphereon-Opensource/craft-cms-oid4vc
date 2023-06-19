@@ -30,7 +30,7 @@ class Settings extends Model
      *
      * @var bool
      */
-    public bool $autoCreateUser = false;
+    public $autoCreateUser = false;
     public string $agentBaseUrl = '';
     public string $presentationDefinitionId = '';
     public string|null $authSuccessRedirectUrl = '';

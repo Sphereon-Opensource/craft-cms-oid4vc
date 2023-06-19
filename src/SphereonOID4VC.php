@@ -3,8 +3,8 @@
 namespace sphereon\craft;
 
 use Craft;
-use craft\base\Event;
-use yii\base\Event as YiiEvent;
+//use craft\base\Event;
+use yii\base\Event; //as YiiEvent;
 use craft\events\PluginEvent;
 use craft\events\RegisterComponentTypesEvent;
 use craft\events\RegisterUserPermissionsEvent;
@@ -32,7 +32,7 @@ class SphereonOID4VC extends \craft\base\Plugin
      * @var SphereonOID4VC
      */
     public static $plugin;
-    public bool $hasCpSettings = true;
+    public $hasCpSettings = true;
 
 
     public function init()
@@ -60,7 +60,7 @@ class SphereonOID4VC extends \craft\base\Plugin
         Event::on(
             CraftVariable::class,
             CraftVariable::EVENT_INIT,
-            function (YiiEvent $event) {
+            function (Event $event) {
                 $variable = $event->sender;
                 $variable->set('qrcode', QRCodeVariable::class);
             }

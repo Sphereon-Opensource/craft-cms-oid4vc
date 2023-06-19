@@ -17,7 +17,7 @@
     "docs": "https://github.com/Sphereon-Opensource/craft-cms-oid4vc/blob/master/README.md"
   },
   "require": {
-    "craftcms/cms": "^4.0.0",
+    "craftcms/cms": "^3.0.0",
     "endroid/qr-code": "^3.5",
     "netresearch/jsonmapper": "v4.2.0",
     "php": "^8.0.2|^9.0",
