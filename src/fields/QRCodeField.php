@@ -35,7 +35,7 @@ class QRCodeField extends Field
      */
     public static function displayName(): string
     {
-        return Craft::t('qrcode', 'QR Code');
+        return Craft::t('sphereon-oid4vc', 'QR Code');
     }
 
     // Public Methods

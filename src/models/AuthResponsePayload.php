@@ -26,7 +26,7 @@ class AuthResponsePayload
     public string $state;
     public string|null $id_token;
     public string $vp_token;
-
+    public array|null $verifiedData;
 
     /**
      * @throws \JsonMapper_Exception
