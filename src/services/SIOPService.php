@@ -133,7 +133,7 @@ class SIOPService extends Component
         $body = new stdClass();
         $body->correlationId = $correlationId;
         $body->definitionId = $definitionId;
-        $body->includeVerifiedData = 'cs-flat';
+        $body->includeVerifiedData = VerifiedDataMode::CREDENTIAL_SUBJECT_FLATTENED;
 
         $response = $this->client->request('POST', $this->getAuthStatusUrl(), [
             RequestOptions::BODY => json_encode($body),
