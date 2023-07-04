@@ -13,6 +13,7 @@ use sphereon\craft\events\AuthStatusEvent;
 use sphereon\craft\events\AuthSuccessEvent;
 use sphereon\craft\events\GenerateAuthRequestEvent;
 use sphereon\craft\models\AuthStatusResponse;
+use sphereon\craft\models\VerifiedDataMode;
 use sphereon\craft\models\GenerateAuthRequestURIResponse;
 use sphereon\craft\SphereonOID4VC;
 use stdClass;

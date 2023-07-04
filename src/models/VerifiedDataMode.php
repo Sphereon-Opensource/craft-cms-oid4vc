@@ -13,7 +13,7 @@ namespace sphereon\craft\models;
 
 enum VerifiedDataMode
 {
-    private const NONE = 'none';
-    private const VERIFIED_PRESENTATION = 'vp';
-    private const CREDENTIAL_SUBJECT_FLATTENED = 'cs-flat';
+    public const NONE = 'none';
+    public const VERIFIED_PRESENTATION = 'vp';
+    public const CREDENTIAL_SUBJECT_FLATTENED = 'cs-flat';
 }
