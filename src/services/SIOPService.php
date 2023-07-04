@@ -177,8 +177,8 @@ class SIOPService extends Component
             return Craft::$app->response->setStatusCode(400);
         }
         // todo: Add mapping function with twig template support to go from VP to the individual items
-        if($authStatusResponse->payload && $authStatusResponse->payload->verifiedData) {
-            return $authStatusResponse->payload->verifiedData;
+        if($authStatusResponse->verifiedData) {
+            return $authStatusResponse->verifiedData;
         }
         return Craft::$app->response->setStatusCode(500);
     }

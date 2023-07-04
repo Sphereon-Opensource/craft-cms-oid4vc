@@ -27,6 +27,7 @@ class AuthStatusResponse
     public int $lastUpdated;
     public AuthResponsePayload|null $payload;
 
+    public array|null $verifiedData;
 
 
     /**
