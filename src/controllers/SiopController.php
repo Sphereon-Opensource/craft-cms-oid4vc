@@ -11,7 +11,7 @@ use sphereon\craft\SphereonOID4VC;
 use yii\db\Exception;
 use yii\web\BadRequestHttpException;
 
-class SiopController extends Controller
+class SiopController extends ProtectedController
 {
 
 
@@ -35,6 +35,9 @@ class SiopController extends Controller
      */
     public function actionInit(): \yii\web\Response
     {
+        if (!$this->isAccessTokenValid(SphereonOID4VC::getInstance()->getSettings(), Craft::$app->request)) {
+            return $this->response;
+        }
         $authRequestURI = SphereonOID4VC::getInstance()->siopservice->createAuthRequest();
         if (!($authRequestURI instanceof GenerateAuthRequestURIResponse)) {
             Craft::warning(sprintf('Generate QR code problem. Body: %s', json_encode($authRequestURI)), 'qr');
@@ -55,6 +58,9 @@ class SiopController extends Controller
         $this->requirePostRequest();
         $settings = SphereonOID4VC::getInstance()->getSettings();
         $request = Craft::$app->request;
+        if (!$this->isAccessTokenValid($settings, $request)) {
+            return $this->response;
+        }
         $correlationId = $request->post('correlationId');
         $definitionId = $request->post('definitionId', $settings->getPresentationDefinitionId());
         $authStatus = SphereonOID4VC::getInstance()->siopservice->getAuthStatus($correlationId, $definitionId);
@@ -75,4 +81,5 @@ class SiopController extends Controller
     {
         return Craft::$app->getUser()->getIdentity();
     }
+
 }
