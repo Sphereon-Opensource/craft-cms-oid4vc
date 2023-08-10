@@ -11,7 +11,7 @@ use sphereon\craft\SphereonOID4VC;
 use yii\db\Exception;
 use yii\web\BadRequestHttpException;
 
-class SiopController extends ProtectedController
+class SiopController extends AuthenticatingController
 {
 
 
@@ -35,7 +35,7 @@ class SiopController extends ProtectedController
      */
     public function actionInit(): \yii\web\Response
     {
-        if (!$this->isAccessTokenValid(SphereonOID4VC::getInstance()->getSettings(), Craft::$app->request)) {
+        if (!$this->setAuthorization(SphereonOID4VC::getInstance()->getSettings(), Craft::$app->request)) {
             return $this->response;
         }
         $authRequestURI = SphereonOID4VC::getInstance()->siopservice->createAuthRequest();
@@ -58,7 +58,7 @@ class SiopController extends ProtectedController
         $this->requirePostRequest();
         $settings = SphereonOID4VC::getInstance()->getSettings();
         $request = Craft::$app->request;
-        if (!$this->isAccessTokenValid($settings, $request)) {
+        if (!$this->setAuthorization($settings, $request)) {
             return $this->response;
         }
         $correlationId = $request->post('correlationId');
