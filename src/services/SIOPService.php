@@ -13,6 +13,7 @@ use sphereon\craft\events\AuthStatusEvent;
 use sphereon\craft\events\AuthSuccessEvent;
 use sphereon\craft\events\GenerateAuthRequestEvent;
 use sphereon\craft\models\AuthStatusResponse;
+use sphereon\craft\models\VerifiedDataMode;
 use sphereon\craft\models\GenerateAuthRequestURIResponse;
 use sphereon\craft\SphereonOID4VC;
 use stdClass;
@@ -133,6 +134,7 @@ class SIOPService extends Component
         $body = new stdClass();
         $body->correlationId = $correlationId;
         $body->definitionId = $definitionId;
+        $body->includeVerifiedData = VerifiedDataMode::CREDENTIAL_SUBJECT_FLATTENED;
 
         $response = $this->client->request('POST', $this->getAuthStatusUrl(), [
             RequestOptions::BODY => json_encode($body),
@@ -170,16 +172,15 @@ class SIOPService extends Component
 
     public function mapVerifiedData(AuthStatusResponse $authStatusResponse): array|Response
     {
+        Craft::info(print_r($authStatusResponse, true));
         if (!$authStatusResponse || $authStatusResponse->status !== 'verified') {
             Craft::warning(sprintf('Auth Status response cannot be converted to verified data, if the status is not "verified", %s', json_encode($authStatusResponse)));
             return Craft::$app->response->setStatusCode(400);
         }
         // todo: Add mapping function with twig template support to go from VP to the individual items
-
-        return array(
-            'firstName' => 'TODO firstname',
-            'lastName' => 'TODO lastname',
-            'email' => 'TODO email'
-        );
+        if($authStatusResponse->verifiedData) {
+            return $authStatusResponse->verifiedData;
+        }
+        return Craft::$app->response->setStatusCode(500);
     }
 }

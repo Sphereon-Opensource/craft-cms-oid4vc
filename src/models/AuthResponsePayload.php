@@ -27,7 +27,6 @@ class AuthResponsePayload
     public string|null $id_token;
     public string $vp_token;
 
-
     /**
      * @throws \JsonMapper_Exception
      */
