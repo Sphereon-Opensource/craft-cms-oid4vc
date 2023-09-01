@@ -7,7 +7,7 @@ use craft\web\Controller;
 
 abstract class AuthenticatingController extends Controller
 {
-    protected function setAuthorization(?\craft\base\Model $settings, \craft\web\Request|\craft\console\Request|\yii\web\Request|\yii\console\Request $request)
+    protected function setAuthorization(?\craft\base\Model $settings, \craft\web\Request|\craft\console\Request|\yii\web\Request|\yii\console\Request $request): void
     {
         $accessToken = $settings->getStaticAccessToken();
         if ($accessToken == null || strlen($accessToken) == 0) {
