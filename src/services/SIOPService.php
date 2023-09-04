@@ -29,13 +29,15 @@ class SIOPService extends Component
     private string $agentBaseUrl;
 
     private string $presentationDefinitionId;
+    private Craft\Base\Model | null $settings;
     private Client $client;
+
 
     public function __construct()
     {
-        $settings = SphereonOID4VC::getInstance()->getSettings();
-        $this->agentBaseUrl = $settings->getAgentBaseUrl();
-        $this->presentationDefinitionId = $settings->getPresentationDefinitionId();
+        $this->settings = SphereonOID4VC::getInstance()->getSettings();
+        $this->agentBaseUrl = $this->settings->getAgentBaseUrl();
+        $this->presentationDefinitionId = $this->settings->getPresentationDefinitionId();
         $this->initialize();
         parent::__construct();
     }
@@ -96,6 +98,7 @@ class SIOPService extends Component
         $response = $this->client->request('POST', $this->getCreateAuthRequestUrl($definitionId), [
             RequestOptions::HEADERS => [
                 'Content-Type' => 'application/json',
+                'Authorization' => $this->getAccessToken(),
             ],
 
         ]);
@@ -141,6 +144,7 @@ class SIOPService extends Component
             RequestOptions::BODY => json_encode($body),
             RequestOptions::HEADERS => [
                 'Content-Type' => 'application/json',
+                'Authorization' => $this->getAccessToken(),
             ],
 
         ]);
@@ -183,5 +187,16 @@ class SIOPService extends Component
             return $authStatusResponse->verifiedData;
         }
         return Craft::$app->response->setStatusCode(500);
+    }
+
+    private function getAccessToken() : string
+    {
+        $accessToken = $this->settings->getStaticAccessToken();
+        if ($accessToken == null || strlen($accessToken) == 0) {
+            $msg = 'A static access token must be configured in the plugin configuration';
+            Craft::error($msg);
+            throw new \RuntimeException($msg);
+        }
+        return "Bearer ". $accessToken;
     }
 }
