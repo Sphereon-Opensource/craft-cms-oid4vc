@@ -28,34 +28,36 @@ class SIOPService extends Component
     public const EVENT_AFTER_SIOPV2_AUTH = 'afterSIOPv2Auth';
     private string $agentBaseUrl;
 
-
     private string $presentationDefinitionId;
+    private Craft\Base\Model | null $settings;
     private Client $client;
+
 
     public function __construct()
     {
-        $settings = SphereonOID4VC::getInstance()->getSettings();
-        $this->agentBaseUrl = $settings->getAgentBaseUrl();
-        $this->presentationDefinitionId = $settings->getPresentationDefinitionId();
+        $this->settings = SphereonOID4VC::getInstance()->getSettings();
+        $this->agentBaseUrl = $this->settings->getAgentBaseUrl();
+        $this->presentationDefinitionId = $this->settings->getPresentationDefinitionId();
         $this->initialize();
         parent::__construct();
     }
 
 
-    public function getAuthRequestBaseUrl()
+    public function getAuthRequestBaseUrl(?string $definitionId = null): string
     {
         // todo: Probably nice to make this configurable
-        return sprintf('%s/webapp/definitions/%s', $this->getAgentBaseUrl(), $this->getPresentationDefinitionId());
+        return sprintf('%s/webapp/definitions/%s', $this->getAgentBaseUrl(),
+            $definitionId != null ? $definitionId : $this->presentationDefinitionId);
     }
 
-    public function getCreateAuthRequestUrl()
+    public function getCreateAuthRequestUrl(?string $definitionId = null): string
     {
         // todo: Probably nice to make this configurable
-        return sprintf('%s/auth-requests', $this->getAuthRequestBaseUrl());
+        return sprintf('%s/auth-requests', $this->getAuthRequestBaseUrl($definitionId));
     }
 
 
-    public function getAuthStatusUrl()
+    public function getAuthStatusUrl(): string
     {
         // todo: Probably nice to make this configurable
         return sprintf('%s/webapp/auth-status', $this->getAgentBaseUrl());
@@ -65,7 +67,7 @@ class SIOPService extends Component
     /**
      * @return string
      */
-    public function getAgentBaseUrl()
+    public function getAgentBaseUrl(): string
     {
         return $this->agentBaseUrl;
     }
@@ -73,7 +75,7 @@ class SIOPService extends Component
     /**
      * @return string
      */
-    public function getPresentationDefinitionId()
+    public function getPresentationDefinitionId(): string
     {
         return $this->presentationDefinitionId;
     }
@@ -84,17 +86,19 @@ class SIOPService extends Component
     }
 
     /**
+     * @param string $definitionId
      * @throws \JsonMapper_Exception
      * @throws Exception
      * @throws GuzzleException
      */
-    public function createAuthRequest(): GenerateAuthRequestURIResponse|Response
+    public function createAuthRequest(?string $definitionId = null): GenerateAuthRequestURIResponse|Response
     {
 
         // POST request
-        $response = $this->client->request('POST', $this->getCreateAuthRequestUrl(), [
+        $response = $this->client->request('POST', $this->getCreateAuthRequestUrl($definitionId), [
             RequestOptions::HEADERS => [
                 'Content-Type' => 'application/json',
+                'Authorization' => $this->getAccessToken(),
             ],
 
         ]);
@@ -107,13 +111,14 @@ class SIOPService extends Component
 
 
     /**
+     * @param ?string $definitionId
      * @throws \JsonMapper_Exception
      * @throws GuzzleException
      * @throws Exception
      */
-    public function createAuthRequestQR(?int $size = null): Markup
+    public function createAuthRequestQR(?string $definitionId = null, ?int $size = null): Markup
     {
-        $authRequest = $this->createAuthRequest();
+        $authRequest = $this->createAuthRequest($definitionId);
         $qr = SphereonOID4VC::getInstance()->qrservice->generate($authRequest->authRequestURI, $size);
         if ($this->hasEventHandlers(self::EVENT_BEFORE_SIOPV2_AUTH)) {
             $event = new GenerateAuthRequestEvent(['authRequestUri' => $authRequest, 'qr' => $qr]);
@@ -140,6 +145,7 @@ class SIOPService extends Component
             RequestOptions::BODY => json_encode($body),
             RequestOptions::HEADERS => [
                 'Content-Type' => 'application/json',
+                'Authorization' => $this->getAccessToken(),
             ],
 
         ]);
@@ -182,5 +188,16 @@ class SIOPService extends Component
             return $authStatusResponse->verifiedData;
         }
         return Craft::$app->response->setStatusCode(500);
+    }
+
+    private function getAccessToken() : string
+    {
+        $accessToken = $this->settings->getStaticAccessToken();
+        if ($accessToken == null || strlen($accessToken) == 0) {
+            $msg = 'A static access token must be configured in the plugin configuration';
+            Craft::error($msg);
+            throw new \RuntimeException($msg);
+        }
+        return "Bearer ". $accessToken;
     }
 }

@@ -34,5 +34,8 @@ return [
     'agentBaseUrl' => 'https://ssi-backend.sphereon.com',
 
     // The page to redirect to once auth is successful
-    'authSuccessRedirectUrl' => '/dbc-conference-success'
+    'authSuccessRedirectUrl' => '/dbc-conference-success',
+
+    // A static access token to protect the service
+    'staticAccessToken' => ''
 ];

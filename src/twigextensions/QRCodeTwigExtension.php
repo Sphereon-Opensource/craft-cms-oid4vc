@@ -47,11 +47,12 @@ class QRCodeTwigExtension extends AbstractExtension
     }
 
     /**
+     * @param ?string $definitionId
      * @param ?int $size
      * @return string
      */
-    public function generate(?int $size = null): string
+    public function generate(?string $definitionId = null, ?int $size = null): string
     {
-        return SphereonOID4VC::$plugin->siopservice->createAuthRequestQR($size);
+        return SphereonOID4VC::$plugin->siopservice->createAuthRequestQR($definitionId, $size);
     }
 }

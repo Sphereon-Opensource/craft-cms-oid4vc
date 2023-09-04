@@ -11,6 +11,7 @@
 
 namespace sphereon\craft\models;
 
+use Craft;
 use craft\base\Model;
 use craft\behaviors\EnvAttributeParserBehavior;
 use craft\helpers\App;
@@ -30,10 +31,11 @@ class Settings extends Model
      *
      * @var bool
      */
-    public $autoCreateUser = false;
+    public bool $autoCreateUser = false;
     public string $agentBaseUrl = '';
     public string $presentationDefinitionId = '';
     public string|null $authSuccessRedirectUrl = '';
+    public string $staticAccessToken = '';
 
 
     // Public Methods
@@ -45,7 +47,7 @@ class Settings extends Model
                 'class' => EnvAttributeParserBehavior::class,
                 'attributes' => [
                     'autoCreateUser',
-                    'agentBaseUrl', 'presentationDefinitionId', 'authSuccessRedirectUrl'
+                    'agentBaseUrl', 'presentationDefinitionId', 'authSuccessRedirectUrl', 'staticAccessToken'
                 ],
             ],
         ];
@@ -60,7 +62,8 @@ class Settings extends Model
             ['autoCreateUser', 'boolean'],
             ['agentBaseUrl', 'string'],
             ['presentationDefinitionId', 'string'],
-            ['authSuccessRedirectUrl', 'string']
+            ['authSuccessRedirectUrl', 'string'],
+            ['staticAccessToken', 'string']
         ];
     }
 
@@ -82,5 +85,10 @@ class Settings extends Model
     public function getAuthSuccessRedirectUrl(): bool
     {
         return $this->authSuccessRedirectUrl;
+    }
+
+    public function getStaticAccessToken(): string
+    {
+        return $this->staticAccessToken;
     }
 }
