@@ -35,7 +35,9 @@ class SiopController extends Controller
      */
     public function actionInit(): \yii\web\Response
     {
-        $authRequestURI = SphereonOID4VC::getInstance()->siopservice->createAuthRequest();
+        $request = Craft::$app->request;
+        $definitionId = $request->get('definitionId');
+        $authRequestURI = SphereonOID4VC::getInstance()->siopservice->createAuthRequest($definitionId);
         if (!($authRequestURI instanceof GenerateAuthRequestURIResponse)) {
             Craft::warning(sprintf('Generate QR code problem. Body: %s', json_encode($authRequestURI)), 'qr');
             throw new \RuntimeException('Could not generate QR code');
@@ -75,4 +77,5 @@ class SiopController extends Controller
     {
         return Craft::$app->getUser()->getIdentity();
     }
+
 }
